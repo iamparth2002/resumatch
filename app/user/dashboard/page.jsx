@@ -10,9 +10,7 @@ import ResumeCreator from './_components/ResumeBuilder'
 import Profile from './_components/Profile'
 import Hackathons from './_components/Hackathons'
 
-
-const Sidebar = ({ activeSection, setActiveSection }) => {
-    const[open, setOpen] = useState(false)
+const Sidebar = ({ activeSection, setActiveSection, setOpen }) => {
   const navItems = [
     { name: "Jobs", icon: Briefcase },
     { name: "Resume", icon: FileText },
@@ -22,21 +20,19 @@ const Sidebar = ({ activeSection, setActiveSection }) => {
 
   return (
     <div className="space-y-4">
-      <div className=" ">
-        <h2 className="mb-2 px-4 text-2xl font-semibold">ResuMatch</h2>
-        <div className="space-y-2 mt-8">
-          {navItems.map((item) => (
-            <Button
-              key={item.name}
-              variant={activeSection === item.name ? "secondary" : "ghost"}
-              className="w-full justify-start"
-              onClick={() => {setActiveSection(item.name);setOpen(false)}}
-            >
-              <item.icon className="mr-2 h-4 w-4" />
-              {item.name}
-            </Button>
-          ))}
-        </div>
+      <h2 className="mb-2 px-4 text-2xl font-semibold">ResuMatch</h2>
+      <div className="space-y-2 mt-8">
+        {navItems.map((item) => (
+          <Button
+            key={item.name}
+            variant={activeSection === item.name ? "secondary" : "ghost"}
+            className="w-full justify-start"
+            onClick={() => { setActiveSection(item.name); setOpen(false); }}
+          >
+            <item.icon className="mr-2 h-4 w-4" />
+            {item.name}
+          </Button>
+        ))}
       </div>
     </div>
   )
@@ -44,6 +40,7 @@ const Sidebar = ({ activeSection, setActiveSection }) => {
 
 export default function Dashboard() {
   const [activeSection, setActiveSection] = useState("Jobs")
+  const [open, setOpen] = useState(false)
 
   const renderContent = () => {
     switch (activeSection) {
@@ -72,14 +69,19 @@ export default function Dashboard() {
         <header className="bg-white p-4 shadow-md">
           <div className="flex items-center justify-between">
             {/* Menu button for mobile */}
-            <Sheet>
+            <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
-                <Button variant="outline" size="icon" className="lg:hidden" onClick={()=>setOpen(true)}>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="lg:hidden"
+                  onClick={() => setOpen(true)}
+                >
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-64">
-                <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} />
+                <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} setOpen={setOpen} />
               </SheetContent>
             </Sheet>
 
