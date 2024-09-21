@@ -1,22 +1,22 @@
-'use client'
-import React, { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Briefcase, FileText, User, Award, Menu } from 'lucide-react'
-import JobListings from './_components/JobListings'
-import ResumeCreator from './_components/ResumeBuilder'
-import Profile from './_components/Profile'
-import Hackathons from './_components/Hackathons'
+'use client';
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Briefcase, FileText, User, Award, Menu } from 'lucide-react';
+import JobListings from './_components/JobListings';
+import ResumeCreator from './_components/ResumeBuilder';
+import Profile from './_components/Profile';
+import Hackathons from './_components/Hackathons';
 
 const Sidebar = ({ activeSection, setActiveSection, setOpen }) => {
   const navItems = [
-    { name: "Jobs", icon: Briefcase },
-    { name: "Resume", icon: FileText },
-    { name: "Hackathons", icon: Award },
-    { name: "Profile", icon: User },
-  ]
+    { name: 'Jobs', icon: Briefcase },
+    { name: 'Resume', icon: FileText },
+    { name: 'Hackathons', icon: Award },
+    { name: 'Profile', icon: User },
+  ];
 
   return (
     <div className="space-y-4">
@@ -25,9 +25,12 @@ const Sidebar = ({ activeSection, setActiveSection, setOpen }) => {
         {navItems.map((item) => (
           <Button
             key={item.name}
-            variant={activeSection === item.name ? "secondary" : "ghost"}
+            variant={activeSection === item.name ? 'secondary' : 'ghost'}
             className="w-full justify-start"
-            onClick={() => { setActiveSection(item.name); setOpen(false); }}
+            onClick={() => {
+              setActiveSection(item.name);
+              setOpen(false);
+            }}
           >
             <item.icon className="mr-2 h-4 w-4" />
             {item.name}
@@ -35,33 +38,37 @@ const Sidebar = ({ activeSection, setActiveSection, setOpen }) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default function Dashboard() {
-  const [activeSection, setActiveSection] = useState("Jobs")
-  const [open, setOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('Jobs');
+  const [open, setOpen] = useState(false);
 
   const renderContent = () => {
     switch (activeSection) {
-      case "Jobs":
-        return <JobListings />
-      case "Resume":
-        return <ResumeCreator />
-      case "Profile":
-        return <Profile />
-      case "Hackathons":
-        return <Hackathons />
+      case 'Jobs':
+        return <JobListings />;
+      case 'Resume':
+        return <ResumeCreator />;
+      case 'Profile':
+        return <Profile />;
+      case 'Hackathons':
+        return <Hackathons />;
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar for larger screens */}
       <aside className="hidden w-64 bg-white p-4 shadow-md lg:block">
-        <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} />
+        <Sidebar
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+          setOpen={setOpen}
+        />
       </aside>
 
       {/* Main content */}
@@ -81,13 +88,20 @@ export default function Dashboard() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-64">
-                <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} setOpen={setOpen} />
+                <Sidebar
+                  activeSection={activeSection}
+                  setActiveSection={setActiveSection}
+                  setOpen={setOpen}
+                />
               </SheetContent>
             </Sheet>
 
             <h1 className="text-2xl font-bold">Dashboard</h1>
             <Avatar className="h-8 w-8">
-              <AvatarImage src="/placeholder.svg?height=32&width=32" alt="User" />
+              <AvatarImage
+                src="/placeholder.svg?height=32&width=32"
+                alt="User"
+              />
               <AvatarFallback>JD</AvatarFallback>
             </Avatar>
           </div>
@@ -98,12 +112,10 @@ export default function Dashboard() {
             <CardHeader>
               <CardTitle>{activeSection}</CardTitle>
             </CardHeader>
-            <CardContent>
-              {renderContent()}
-            </CardContent>
+            <CardContent>{renderContent()}</CardContent>
           </Card>
         </main>
       </div>
     </div>
-  )
+  );
 }
